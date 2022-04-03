@@ -10,5 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class TodoEntity {
-
+	private String id;
+	private String userId;
+	private String title;
+	private boolean done;
 }
