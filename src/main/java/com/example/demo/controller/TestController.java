@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.TestRequestBodyDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,5 +26,10 @@ public class TestController {
 	public String testControllerRequestParam(@RequestParam(required = false) int id) {
 		return "여보세요. 내가 몇 번째 전화 거는 줄 알아?" + id;
 
+	}
+
+	public String testControllerRequestBody(@RequestBody TestRequestBodyDTO testRequestBodyDTO) {
+		return "Hello World ID " + testRequestBodyDTO.getId() + "Message : " +
+				testRequestBodyDTO.getMessage();
 	}
 }
