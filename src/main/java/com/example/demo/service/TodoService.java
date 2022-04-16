@@ -35,6 +35,11 @@ public class TodoService {
 		return repository.findByUserId(entity.getUserId());
 	}
 
+	public List<TodoEntity> retrieve(final String userId) {
+		return repository.findByUserId(userId);
+	}
+
+
 
 	// 다른 부분에서도 사용할 거니깐 private로
 	private void validate(final TodoEntity entity) {
