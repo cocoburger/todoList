@@ -83,4 +83,33 @@ public class TodoController {
 		return ResponseEntity.ok().body(response);
 	}
 
+@PutMapping
+	public ResponseEntity<?> updateTodo(@RequestBody TodoDTO dto) {
+		String temporaryId = "temporary-user";
+
+		// (1) dto를 entity로 변환한다.
+		TodoEntity entity = TodoDTO.todoEntity(dto);
+
+		// (2) id를 temporaryUserId로 초기화한다.
+		entity.setUserId(temporaryId);
+
+		// (3) 서비스를 이용해 entity를 업데이트한다.
+		List<TodoEntity> entities = todoService.update(entity);
+
+		// (4) 자바 스트림을 이용해 리턴된 엔티티 리스트를 TodoDTO를 리스트로 변환한다.
+		/**
+		 * 스트림(stream)
+		 * 다양한 데이터 소스(컬렉션, 배열)를 표준화된 방법으로 다루기 위한 것
+		 * 스트림의 요소들을 모아 collect(Collectors.toList()는 List로 변환합니다.
+		 * 아래 코드는 entities들을 TodoDTO instance 생성 후 List로 변환해줍니다.
+		 */
+		List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
+
+		// (5) 변환된 TodoDTO 리스트를 이용해 ResponseDTO를 초기화한다.
+		ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
+
+		//(6) ResponseDTO를 리턴한다.
+		return ResponseEntity.ok().body(response);
+	}
+
 }
